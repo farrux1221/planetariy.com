@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Planetariy.uz — Astronomiya Ko‘rgazma Saroyi</title>
+  <meta name="description" content="Planetariy.uz — Toshkentdagi zamonaviy planetariy. Shoular, ta'lim dasturlari, va oilaviy tadbirlar haqida ma'lumot va chiptalar." />
+  <style>
+    
+    :root{--accent:#7bdcff;--dark:#070712;--glass:rgba(255,255,255,0.06)}
+    *{box-sizing:border-box;margin:0;padding:0;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+    body{background:#000;color:#e9f6ff;line-height:1.5}
+
+    /* NAVBAR */
+    nav{position:fixed;inset:0 0 auto 0;display:flex;justify-content:space-between;align-items:center;padding:18px 32px;z-index:30;background:linear-gradient(180deg, rgba(7,7,18,0.55), rgba(7,7,18,0.15));backdrop-filter:blur(6px)}
+    .brand{display:flex;gap:14px;align-items:center}
+    .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,#0b2038,#162a45);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--accent);font-size:18px}
+    .title{font-weight:700;font-size:18px}
+    ul.menu{display:flex;gap:18px;list-style:none}
+    ul.menu a{color:inherit;text-decoration:none;padding:8px 10px;border-radius:8px;transition:all .18s}
+    ul.menu a:hover{background:var(--glass);transform:translateY(-2px)}
+    .cta{padding:8px 12px;border-radius:8px;background:var(--accent);color:#001; font-weight:600}
+
+    /* HERO with video background */
+    .hero{position:relative;height:88vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:contrast(1.05) saturate(1.1)}
+    .overlay{position:absolute;inset:0;background:linear-gradient(180deg, rgba(2,6,23,0.35), rgba(2,6,23,0.6));mix-blend-mode:normal}
+    .hero-inner{position:relative;z-index:5;padding:120px 24px 40px;text-align:center;max-width:1100px}
+    .kicker{display:inline-block;background:rgba(11,28,45,0.45);padding:6px 12px;border-radius:999px;font-size:13px;margin-bottom:18px}
+    h1{font-size:48px;line-height:1.02;margin-bottom:12px;letter-spacing:0.6px}
+    p.lead{max-width:820px;margin:0 auto 18px;color:#cfefff;font-size:18px}
+    .actions{display:flex;gap:12px;justify-content:center;margin-top:18px}
+    .btn{padding:12px 18px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
+    .btn-primary{background:var(--accent);color:#001}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.08);color:inherit}
+
+    /* SHOWS / MENU CARDS */
+    .shows{padding:56px 24px;background:linear-gradient(180deg,#030311 0%, #060617 100%)}
+    .container{max-width:1100px;margin:0 auto}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:20px}
+    .card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;box-shadow:0 6px 18px rgba(2,6,23,0.6);transition:transform .18s}
+    .card:hover{transform:translateY(-8px)}
+    .card h3{font-size:20px;margin-bottom:8px}
+    .meta{font-size:13px;color:#a9d9f0;margin-bottom:10px}
+    .card p{font-size:14px;color:#d9f0ff}
+
+    /* SCHEDULE */
+    .schedule{padding:36px 24px}
+    table{width:100%;border-collapse:collapse;background:transparent}
+    th,td{padding:12px 10px;text-align:left;border-bottom:1px dashed rgba(255,255,255,0.04)}
+    th{font-size:14px;color:#9ddcff}
+
+    /* FOOTER */
+    footer {
+  background: #0d1b2a;
+  padding: 50px 0;
+  color: #cfefff;
+  border-top: 1px solid #1e3a5f;
+}
+
+footer h3 {
+  color: #79c7ff;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+footer p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #d3f1ff;
+}
+
+footer .social-links {
+  display: flex;
+  gap: 15px;
+  margin: 12px 0 20px;
+}
+
+footer .social-links a {
+  font-size: 22px;
+  color: #79c7ff;
+  transition: 0.3s;
+}
+
+footer .social-links a:hover {
+  color: #a9e2ff;
+  transform: scale(1.1);
+}
+
+footer iframe {
+  width: 100%;
+  height: 300px;
+  border-radius: 12px;
+  border: none;
+  margin-top: 10px;
+}
+
+footer small {
+  margin-top: 20px;
+  display: block;
+  font-size: 14px;
+  color: #8fb8d8;
+}
+
+/* Responsiv */
+@media (max-width: 600px) {
+  footer h3 {
+    font-size: 18px;
+  }
+
+  footer p {
+    font-size: 14px;
+  }
+
+  footer .social-links a {
+    font-size: 20px;
+  }
+}
+
+
+.carousel-container {
+    position: relative;
+    max-width: 1400px;
+    margin: 40px auto;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+  }
+  .carousel-slide {
+    display: flex;
+    transition: transform 0.7s cubic-bezier(0.4,0,0.2,1);
+  }
+  .carousel-slide img {
+    width: calc(100%/3);
+    height: 520px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(12px);
+    color: white;
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    font-size: 34px;
+    cursor: pointer;
+    z-index: 10;
+    transition: .3s;
+  }
+  .carousel-btn:hover {
+    background: #7bdcff;
+    color: #000;
+    transform: translateY(-50%) scale(1.2);
+  }
+  .prev { left: 24px; }
+  .next { right: 24px; }
+
+  .carousel-dots {
+    text-align: center;
+    padding: 30px 0 10px;
+  }
+  .dot {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin: 0 10px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: .3s;
+  }
+  .dot.active, .dot:hover {
+    background: #7bdcff;
+    transform: scale(1.5);
+  }
+  .menu-row{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.menu-text{
+  width: 500px;
+  font-size: 20px;
+}
+
+  /* Mobil: 1 ta rasm */
+  @media (max-width: 900px) {
+    .carousel-slide img {
+      width: 100%;
+      height: 400px;
+    }
+    .carousel-btn {
+      width: 50px;
+      height: 50px;
+      font-size: 28px;
+    }
+    .prev { left: 12px; }
+    .next { right: 12px; }
+  }
+ 
+.custom-video-box{
+  width: 700px;
+  height: 400px;
+  margin: 30px auto;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  border: 1px solid rgba(255,255,255,0.12);
+  background: #000;
+}
+
+.custom-video-box video{
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* videoni to'g'ri to'ldiradi */
+  display: block;
+  border-radius: inherit;
+}
+
+/* Responsive */
+@media (max-width: 800px){
+  .custom-video-box{
+    width: 100%;
+    height: 280px;
+  }
+}
+
+
+
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="brand">
+      <div class="logo">P</div>
+      <div class="title">Planetariy.uz</div>
+    </div>
+    <ul class="menu">
+      <li><a href="#education">Biz haqimizda</a></li>
+      <li><a href="#departments">Bo'limlar</a></li>
+      <li><a href="#schedule"> Filmlar Jadvali</a></li>
+      <li><a href="#gallery">Foto albom</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+      <li><a class="cta" href="#book">Chipta</a></li>
+    </ul>
+  </nav>
+<!-- Modal Structure -->
+
+
+  <header class="hero" role="banner">
+    <video autoplay muted loop playsinline>
+      <source src="./40 мб.mp4" type="video/mp4">
+      <!-- fallback: a large starfield image -->
+    </video>
+    <div class="overlay"></div>
+
+    <div class="hero-inner container">
+      <div class="kicker">Astronomiya Ko‘rgazma Saroyi</div>
+      <h1>Samoviy sayohatga tayyormisiz?<br><span style="color:var(--accent)">Planetariy.uz</span> bilan yulduzlar ostida</h1>
+      <p class="lead">Interaktiv planetariy shoular, ilmiy ishlanmalar va ota-ona bilan birgalikda o‘tkaziladigan oilaviy dasturlar. Har bir tashrif — o‘rganish va ilhom olish uchun imkoniyat.</p>
+      <div class="actions">
+        <button class="btn btn-primary" id="book">Chipta bron qiling</button>
+        <button class="btn btn-ghost" onclick="document.getElementById('shows').scrollIntoView({behavior:'smooth'})">Shoularni ko‘ring</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="education" class="shows">
+      <div class="container">
+        <h2 style="font-size:24px">Biz haqimizda</h2>
+      
+      <div class="menu-row">
+         <div class="menu-img">
+        <img src="./foto4.jpg"style="width:80%; height: 450px;border-radius:12px;"  alt="">
+       </div>
+
+       <div class="menu-text">
+        <p style="color:#cfefff; margin-top:8px">Toshkent shahar Planetariysi — 2003-yilda tashkil etilgan bo‘lib, yoshlar va tashrif buyuruvchilarda astronomiyaga qiziqishni oshirishga xizmat qiladi. 80 o‘rinli zalda o‘zbek, rus va ingliz tillarida 3D dasturlar namoyish etilib, sayyoralar va koinot haqida qiziqarli ma’lumotlar beriladi.
+
+          So‘nggi yillarda planetariyga ko‘plab xorijiy davlatlardan mehmonlar tashrif buyurmoqda. Har yili homiylar ko‘magida xayriya tadbirlari o‘tkaziladi. Bu yerga o‘quvchilar, talaba-yoshlar, nuroniylar va ijtimoiy himoyaga muhtoj bolalar tez-tez tashrif buyurishadi.
+          
+          Hududda teleskop, quyosh tizimi, raketalar, sayyoralar, M.Ulug‘bek va Al-Farg‘oniy maketlari, fazogirlar burchagi kabi ko‘plab eksponatlar joylashgan. Ko‘rsatuv atrofida yulduz turkumlari va quyosh tizimi maketlari o‘rnatilgan.</p>
+     
+       </div>
+      </div>
+       </div>
+    </section>
+      
+    <section id="departments" class="shows">
+        <div class="container">
+          <h2 style="font-size:28px; margin-bottom:18px;">Bizda mavjud bo‘limlar</h2>
+          <div class="grid" style="grid-template-columns:repeat(3,1fr); gap:18px;">
+            
+            <article class="card">
+              <img src="mirzoulugbek.jpg" style="width:100%;border-radius:12px; margin-bottom:10px;" />
+              <h3>Mirzo Ulug'bek esponatlari</h3>
+              <p>Makablar va guruhlar uchun interaktiv darslar, master-klasslar va ilmiy seminarlar.</p>
+            </article>
+                
+            <article class="card">
+              <img src="./ulugbekrasatxonasi.jpg" style="width:100%;border-radius:12px; margin-bottom:10px; height: 240px;" />
+              <h3>Mirzo Ulug'bek rasadxonasi</h3>
+              <p>Yulduzlar, sayyoralar va kosmik fenomenlar haqida vizual va interaktiv eksponatlar.</p>
+            </article>
+      
+            <article class="card">
+              <img src="fazogirlar.jpg" style="width:100%;border-radius:12px; margin-bottom:10px;" />
+              <h3>Fazogirlar burchagi</h3>
+              <p>Ota-ona va bolalar uchun kosmik shoular, tematik kechalar va ilmiy tadbirlar.</p>
+            </article>
+
+
+
+            <article class="card">
+              <img src="fargoniy.jpg" style="width:100%;border-radius:12px; margin-bottom:10px;" />
+              <h3>Axmad Al -Farg'oniy va Mirzo Ulugbek</h3>
+              <p>Makablar va guruhlar uchun interaktiv darslar, master-klasslar va ilmiy seminarlar.</p>
+            </article>
+                
+            <article class="card">
+              <img src="./kosmos.jpg" style="width:100%;border-radius:12px; margin-bottom:10px; height: 240px;" />
+              <h3>"Kosmos" burchagi</h3>
+              <p>Yulduzlar, sayyoralar va kosmik fenomenlar haqida vizual va interaktiv eksponatlar.</p>
+            </article>
+      
+            <article class="card">
+              <img src="yuluzlar.jpg" style="width:100%;border-radius:12px; margin-bottom:10px;" />
+              <h3>Yulduzlar burchagi</h3>
+              <p>Ota-ona va bolalar uchun kosmik shoular, tematik kechalar va ilmiy tadbirlar.</p>
+            </article>
+      
+          </div>
+        </div>
+      </section>
+      <div class="custom-video-box">
+        <video src="./40 мб.mp4" autoplay muted loop></video>
+    </div>
+    
+
+      <section id="schedule" class="schedule container">
+        <h2 style="font-size:24px">  Namoyish etiladigan  filmlar:</h2>
+       
+      
+        <div class="container">
+          <div class="grid" style="grid-template-columns:repeat(3,1fr); gap:18px;">
+      
+            <!-- Ko‘rish Jarayoni -->
+            <article class="card">
+              <img src="./filmlar/Рисунок11.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Tabiatshunoslik</h3>
+              <p>Uzoq yulduzda tug‘ilgan yorug‘likning bizga kelguncha o‘tgan ajoyib sayohati haqida.</p>
+              <small>Janr: Tabiatshunoslik • Davomiyligi: 27 min • Tillar: Uz, Ru, Eng • Yoshi: 6+</small>
+            </article>
+      
+            <!-- Somon Yo'li Markaziga Sayohat -->
+            <article class="card">
+              <img src="./filmlar/Рисунок12.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Somon Yo'li Markaziga Sayohat</h3>
+              <p>Galaktika markazidagi ulkan qora o‘ra tomon yorug‘lik tezligida sayohat.</p>
+              <small>Janr: Astronomiya • Davomiyligi: 7 min • Tillar: Uz, Ru, Eng • Yoshi: 6+</small>
+            </article>
+      
+            <!-- Ikkita Kichik Oynacha -->
+            <article class="card">
+              <img src="./filmlar/Рисунок13.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Ikkita Kichik Oynacha</h3>
+              <p>Teleskop tarixi, ishlash prinsipi va yirik kashfiyotlar haqida qiziqarli sayohat.</p>
+              <small>Janr: Astronomiya • Davomiyligi: 25 min • Tillar: Uz, Ru, Eng • Yoshi: 12+</small>
+            </article>
+      
+            <!-- Yorug‘lik -->
+            <article class="card">
+              <img src="./filmlar/Рисунок14.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Yorug'lik</h3>
+              <p>Yorug‘likning hayotimizdagi o‘rni va optik texnologiyalarning kuchi haqida hujjatli film.</p>
+              <small>Janr: Hujjatli • Davomiyligi: 7 min • Tillar: Uz, Ru, Eng • Yoshi: 6+</small>
+            </article>
+      
+            <!-- Koinot Qa'rida -->
+            <article class="card">
+              <img src="./filmlar/Рисунок15.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Koinot Qa'rida</h3>
+              <p>Qadimiy astronomiyadan zamonaviy teleskoplargacha bo‘lgan samoviy kashfiyotlar.</p>
+              <small>Janr: Astronomiya • Davomiyligi: 32 min • Tillar: Uz, Ru, Eng • Yoshi: 6+</small>
+            </article>
+      
+            <!-- IBEX -->
+            <article class="card">
+              <img src="./filmlar/Рисунок16.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>IBEX — Quyosh tizimi chegarasi</h3>
+              <p>NASA IBEX missiyasi orqali Quyosh tizimi chegaralarini tadqiq etish jarayoni.</p>
+              <small>Janr: Astronomiya • Davomiyligi: 25 min • Tillar: Ru, Eng • Yoshi: 16+</small>
+            </article>
+      
+            <!-- Oyga Butunlay Qaytish -->
+            <article class="card">
+              <img src="./filmlar/Рисунок17.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Oyga Butunlay Qaytish</h3>
+              <p>Oyga qurilma qo‘ndiruvchi xalqaro jamoalarning zamonaviy kosmik poygasi.</p>
+              <small>Janr: Astronomiya • Davomiyligi: 25 min • Tillar: Ru, Eng • Yoshi: 12+</small>
+            </article>
+      
+            <!-- Yulduzlarni Yo'qotib -->
+            <article class="card">
+              <img src="./filmlar/Рисунок18.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Yulduzlarni Yo'qotib</h3>
+              <p>Yorug‘lik ifloslanishi va uning astronomiya hamda tabiatga ta’siri haqida.</p>
+              <small>Janr: Astronomiya • Davomiyligi: 7 min • Tillar: Ru, Eng • Yoshi: 12+</small>
+            </article>
+      
+            <!-- Qoramtir Materiya -->
+            <article class="card">
+              <img src="./filmlar/Рисунок19.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Qoramtir Materiya</h3>
+              <p>Koinotdagi eng sirli materiya — qoramtir materiya haqida ilmiy tushuntirish.</p>
+              <small>Janr: Astronomiya • Davomiyligi: 20 min • Tillar: Ru, Eng • Yoshi: 16+</small>
+            </article>
+      
+          </div>
+        </div>
+      </section>
+      
+      <section id="schedule" class="schedule container">
+        <h2 style="font-size:24px">  Namoyish etiladigan rus tilidagi filmlar:</h2>
+       
+      
+        <div class="container">
+          <div class="grid" style="grid-template-columns:repeat(3,1fr); gap:18px;">
+      
+            <!-- В глубины Вселенной -->
+            <article class="card">
+              <img src="./filmlar/Рисунок1.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>В глубины Вселенной</h3>
+              <p>Галактики, звезды ва koinot tarixi haqida 3D sayohat.</p>
+              <small>Janr: Астрономия • 32 min • Rus • 6+</small>
+            </article>
+      
+            <!-- Путешествие к центру Млечного Пути -->
+            <article class="card">
+              <img src="./filmlar/Рисунок2.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Путешествие к центру Млечного Пути</h3>
+              <p>Galaktika markazi va qora tuynukka qisqa sayohat.</p>
+              <small>Janr: Астрономия • 7 min • Rus • 6+</small>
+            </article>
+      
+            <!-- Два стёклышка -->
+            <article class="card">
+              <img src="./filmlar/Рисунок3.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Два стёклышка</h3>
+              <p>Teleskopning yaratilishi va ilmiy kashfiyotlar.</p>
+              <small>Janr: Астрономия • 25 min • Rus • 12+</small>
+            </article>
+      
+            <!-- IBEX -->
+            <article class="card">
+              <img src="./filmlar/Рисунок4.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>IBEX</h3>
+              <p>Quyosh tizimi chegaralarini NASA tadqiqoti.</p>
+              <small>Janr: Астрономия • 25 min • Rus • 16+</small>
+            </article>
+      
+            <!-- Возвращение на Луну навсегда -->
+            <article class="card">
+              <img src="./filmlar/Рисунок5.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Возвращение на Луну навсегда</h3>
+              <p>Zamonaviy Oyga uchish musobaqasi.</p>
+              <small>Janr: Астрономия • 25 min • Rus • 12+</small>
+            </article>
+      
+            <!-- Теряя звезды -->
+            <article class="card">
+              <img src="./filmlar/Рисунок6.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Теряя звезды</h3>
+              <p>Yorug‘lik ifloslanishi va yulduzlarni yo‘qotish sababi.</p>
+              <small>Janr: Астрономия • 7 min • Rus • 12+</small>
+            </article>
+      
+            <!-- Тёмная материя -->
+            <article class="card">
+              <img src="./filmlar/Рисунок7.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Тёмная материя</h3>
+              <p>Koinotdagi sirli qoramtir materiya.</p>
+              <small>Janr: Астрономия • 20 min • Rus • 16+</small>
+            </article>
+      
+            <!-- Беспокойная Вселенная -->
+            <article class="card">
+              <img src="./filmlar/Рисунок8.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Беспокойная Вселенная</h3>
+              <p>Supernova, qora tuynuk va yuqori energiya hodisalari.</p>
+              <small>Janr: Астрономия • 29 min • Rus • 6+</small>
+            </article>
+      
+            <!-- Созвездия — 10 шагов -->
+            <article class="card">
+              <img src="./filmlar/Рисунок9.png" style="width:100%;border-radius:12px;margin-bottom:10px;">
+              <h3>Созвездия — 10 шагов</h3>
+              <p>Yulduzlar, burjlar va ularning sirli tuzilishi.</p>
+              <small>Janr: Астрономия • 20 min • Rus • 6+</small>
+            </article>
+      
+          </div>
+        </div>
+      </section>
+      
+   
+    <!-- MIJOZLAR FIKRI -->
+    
+
+    <!-- FOTO ALBOM (CAROUSEL) -->
+    <section id="gallery" class="shows">
+      <div class="container">
+        <h2>Foto albom</h2>
+        <p style="color:#cfefff;margin-top:8px">Avtomatik aylanadi + tugmalar bilan boshqariladi</p>
+    
+        <div class="carousel-container">
+          <div class="carousel-slide" id="carouselSlide">
+            <img src="foto1.jpg" alt="1">
+            <img src="foto2.jpg" alt="2">
+            <img src="foto3.jpg" alt="3">
+            <img src="foto4.jpg" alt="4">
+            <img src="foto5.jpg" alt="5">
+            <img src="foto6.jpg" alt="6">
+            <!-- Infinite scroll uchun takrorlash -->
+            <img src="foto1.jpg" alt="1">
+            <img src="foto2.jpg" alt="2">
+            <img src="foto3.jpg" alt="3">
+          </div>
+    
+          <!-- Tugmalarga ikonka qo‘shildi -->
+          <button class="carousel-btn prev">❮</button>
+          <button class="carousel-btn next">❯</button>
+    
+          <div class="carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="gallery" class="shows">
+      <div class="container">
+        <h2>Foto albom</h2>
+        <p style="color:#cfefff;margin-top:8px">Avtomatik aylanadi + tugmalar bilan boshqariladi</p>
+    
+        <div class="carousel-container">
+          <div class="carousel-slide" id="carouselSlide">
+            <img src="foto1.jpg" alt="1">
+            <img src="foto2.jpg" alt="2">
+            <img src="foto3.jpg" alt="3">
+            <img src="foto4.jpg" alt="4">
+            <img src="foto5.jpg" alt="5">
+            <img src="foto6.jpg" alt="6">
+            <!-- Infinite scroll uchun takrorlash -->
+            <img src="foto1.jpg" alt="1">
+            <img src="foto2.jpg" alt="2">
+            <img src="foto3.jpg" alt="3">
+          </div>
+    
+          <!-- Tugmalarga ikonka qo‘shildi -->
+          <button class="carousel-btn prev">❮</button>
+          <button class="carousel-btn next">❯</button>
+    
+          <div class="carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="gallery" class="shows">
+      <div class="container">
+        <h2>Foto albom</h2>
+        <p style="color:#cfefff;margin-top:8px">Avtomatik aylanadi + tugmalar bilan boshqariladi</p>
+    
+        <div class="carousel-container">
+          <div class="carousel-slide" id="carouselSlide">
+            <img src="foto1.jpg" alt="1">
+            <img src="foto2.jpg" alt="2">
+            <img src="foto3.jpg" alt="3">
+            <img src="foto4.jpg" alt="4">
+            <img src="foto5.jpg" alt="5">
+            <img src="foto6.jpg" alt="6">
+            <!-- Infinite scroll uchun takrorlash -->
+            <img src="foto1.jpg" alt="1">
+            <img src="foto2.jpg" alt="2">
+            <img src="foto3.jpg" alt="3">
+          </div>
+    
+          <!-- Tugmalarga ikonka qo‘shildi -->
+          <button class="carousel-btn prev">❮</button>
+          <button class="carousel-btn next">❯</button>
+    
+          <div class="carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="gallery" class="shows">
+      <div class="container">
+        <h2>Foto albom</h2>
+        <p style="color:#cfefff;margin-top:8px">Avtomatik aylanadi + tugmalar bilan boshqariladi</p>
+    
+        <div class="carousel-container">
+          <div class="carousel-slide" id="carouselSlide">
+            <img src="foto1.jpg" alt="1">
+            <img src="foto2.jpg" alt="2">
+            <img src="foto3.jpg" alt="3">
+            <img src="foto4.jpg" alt="4">
+            <img src="foto5.jpg" alt="5">
+            <img src="foto6.jpg" alt="6">
+            <!-- Infinite scroll uchun takrorlash -->
+            <img src="foto1.jpg" alt="1">
+            <img src="foto2.jpg" alt="2">
+            <img src="foto3.jpg" alt="3">
+          </div>
+    
+          <!-- Tugmalarga ikonka qo‘shildi -->
+          <button class="carousel-btn prev">❮</button>
+          <button class="carousel-btn next">❯</button>
+    
+          <div class="carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="gallery" class="shows">
+      <div class="container">
+        <h2>Foto albom</h2>
+        <p style="color:#cfefff;margin-top:8px">Avtomatik aylanadi + tugmalar bilan boshqariladi</p>
+    
+        <div class="carousel-container">
+          <div class="carousel-slide" id="carouselSlide">
+            <img src="foto1.jpg" alt="1">
+            <img src="foto2.jpg" alt="2">
+            <img src="foto3.jpg" alt="3">
+            <img src="foto4.jpg" alt="4">
+            <img src="foto5.jpg" alt="5">
+            <img src="foto6.jpg" alt="6">
+            <!-- Infinite scroll uchun takrorlash -->
+            <img src="foto1.jpg" alt="1">
+            <img src="foto2.jpg" alt="2">
+            <img src="foto3.jpg" alt="3">
+          </div>
+    
+          <!-- Tugmalarga ikonka qo‘shildi -->
+          <button class="carousel-btn prev">❮</button>
+          <button class="carousel-btn next">❯</button>
+    
+          <div class="carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="gallery" class="shows">
+      <div class="container">
+        <h2>Foto albom</h2>
+        <p style="color:#cfefff;margin-top:8px">Avtomatik aylanadi + tugmalar bilan boshqariladi</p>
+    
+        <div class="carousel-container">
+          <div class="carousel-slide" id="carouselSlide">
+            <img src="foto1.jpg" alt="1">
+            <img src="foto2.jpg" alt="2">
+            <img src="foto3.jpg" alt="3">
+            <img src="foto4.jpg" alt="4">
+            <img src="foto5.jpg" alt="5">
+            <img src="foto6.jpg" alt="6">
+            <!-- Infinite scroll uchun takrorlash -->
+            <img src="foto1.jpg" alt="1">
+            <img src="foto2.jpg" alt="2">
+            <img src="foto3.jpg" alt="3">
+          </div>
+    
+          <!-- Tugmalarga ikonka qo‘shildi -->
+          <button class="carousel-btn prev">❮</button>
+          <button class="carousel-btn next">❯</button>
+    
+          <div class="carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+            <span class="dot" data-index="3"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+</main>
+<section id="testimonials" class="shows">
+  <div class="container">
+    <h2 style="font-size:28px">Mijozlar fikri</h2>
+    <div class="grid">
+      <article class="card">
+        <h3>Oila bilan tashrif buyurdik</h3>
+        <div class="meta">🚀 Dilnoza · Ota-ona</div>
+        <p>Bolalar juda hayajonlanishdi! Yulduzlar xaritasi shousi ular uchun juda qiziqarli bo‘ldi. Juda tavsiya qilaman.</p>
+      </article>
+
+      <article class="card">
+        <h3>Stunning visuals!</h3>
+        <div class="meta">🌍 John · USA</div>
+        <p>The planetarium show was absolutely beautiful. I learned a lot about Uzbek astronomy history. Must visit place!</p>
+      </article>
+
+      <article class="card">
+        <h3>Ajoyib tajriba!</h3>
+        <div class="meta">✨ Farhod · Sayohatchi</div>
+        <p>Ko‘rgazmalar mazmunli, shoular esa juda sifatli. O‘zbekistonda bunday joy borligidan faxrlanaman.</p>
+      </article>
+    </div>
+  </div>
+</section>
+<footer id="kontakt" style="background:#0d1b2a;padding:40px 0;color:#cfefff;border-top:1px solid #1e3a5f;">
+  <div class="container">
+
+    <!-- MANZIL -->
+    <h3 style="margin-bottom:10px;color:#79c7ff;">Bizning manzil</h3>
+    <p style="margin-bottom:20px;">
+      📍 Toshkent shahri, Astronomiya ko'rgazmalar saroyi, Planetariy majmuasi
+    </p>
+
+    <!-- TELEFONLAR -->
+    <h3 style="margin-bottom:10px;color:#79c7ff;">Aloqa</h3>
+    <p>📞 +998 71 200 33 44</p>
+    <p>📞 +998 90 123 45 67</p>
+    <p>📞 +998 93 987 65 43</p>
+
+    <!-- EMAIL -->
+    <h3 style="margin-top:20px;color:#79c7ff;">Email</h3>
+    <p>✉ planetariyuz@gmail.com</p>
+
+    <!-- IJTIMOIY TARMOQLAR -->
+    <h3 style="margin-top:20px;color:#79c7ff;">Bizni kuzating</h3>
+    <div style="display:flex; gap:15px; align-items:center; margin:10px 0;">
+      <a href="#" style="color:#79c7ff;font-size:22px;">🌐 Facebook</a>
+      <a href="#" style="color:#79c7ff;font-size:22px;">📸 Instagram</a>
+      <a href="#" style="color:#79c7ff;font-size:22px;">▶ YouTube</a>
+      <a href="#" style="color:#79c7ff;font-size:22px;">✈ Telegram</a>
+    </div>
+
+    <!-- GOOGLE MAPS -->
+    <h3 style="margin-top:25px;color:#79c7ff;margin-bottom:10px;">Lokatsiya (Google Maps)</h3>
+
+    <iframe 
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2994.94808271278!2d69.284038!3d41.3385259!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8bb4f5b7252b%3A0x56672cffa4b84224!2sAstronomiya%20instituti!5e0!3m2!1suz!2s!4v1700000000000" 
+      width="100%" 
+      height="300" 
+      style="border:0;border-radius:12px;margin-top:10px;" 
+      allowfullscreen="" 
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+
+    <p style="margin-top:25px;font-size:14px;color:#8fb8d8;">
+      © 2025 "Astronomiya Ko‘rgazma Saroyi" — Planetariy.uz
+    </p>
+
+  </div>
+</footer>
+
+
+<script>
+  // Carousel – 100% ishlaydi
+  const slide = document.getElementById('carouselSlide');
+  const prevBtn = document.querySelector('.carousel-btn.prev');
+  const nextBtn = document.querySelector('.carousel-btn.next');
+  const dots = document.querySelectorAll('.dot');
+  let index = 0;
+  const totalSlides = 4; // real rasmlar soni (foto1 dan foto4 gacha)
+  
+  function updateCarousel() {
+    slide.style.transform = `translateX(${-index * (100 / 3)}%)`;
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+  }
+  
+  // Keyingi rasm
+  nextBtn.onclick = () => {
+    index++;
+    if (index >= totalSlides) {
+      index = 0;
+      slide.style.transition = 'none';
+      slide.style.transform = 'translateX(0)';
+      void slide.offsetWidth; // reflow
+      slide.style.transition = 'transform 0.7s cubic-bezier(0.4,0,0.2,1)';
+    }
+    updateCarousel();
+  };
+  
+  // Oldingi rasm
+  prevBtn.onclick = () => {
+    if (index === 0) {
+      index = totalSlides;
+      slide.style.transition = 'none';
+      slide.style.transform = `translateX(${-totalSlides * (100 / 3)}%)`;
+      void slide.offsetWidth;
+      slide.style.transition = 'transform 0.7s cubic-bezier(0.4,0,0.2,1)';
+    }
+    index--;
+    updateCarousel();
+  };
+  
+  // Nuqtalar bilan boshqarish
+  dots.forEach((dot, i) => {
+    dot.onclick = () => {
+      index = i;
+      updateCarousel();
+    };
+  });
+  
+  // Avtomatik aylanuvchi
+  let autoSlide = setInterval(() => nextBtn.click(), 4500);
+  
+  // Hoverda to‘xtatish (ixtiyoriy, chiroyli bo‘ladi)
+  document.querySelector('.carousel-container').addEventListener('mouseenter', () => clearInterval(autoSlide));
+  document.querySelector('.carousel-container').addEventListener('mouseleave', () => {
+    autoSlide = setInterval(() => nextBtn.click(), 4500);
+  });
+  
+  // Boshlang‘ich holat
+  updateCarousel();
+  </script>
+</body>
+</html>
