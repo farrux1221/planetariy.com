@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Planetariy.uz — Astronomiya Ko‘rgazma Saroyi</title>
+  <meta name="description" content="Toshkentdagi zamonaviy planetariy. Shoular, ta'lim dasturlari va chipta bron." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --accent:#7bdcff; --dark:#070712; --glass:rgba(255,255,255,0.06); }
+    * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
+    body { background:#000; color:#e9f6ff; line-height:1.6; }
+
+    nav {
+      position:fixed; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center;
+      padding:16px 24px; z-index:1000;
+      background:linear-gradient(180deg,rgba(7,7,18,0.9),rgba(7,7,18,0.3));
+      backdrop-filter:blur(12px);
+    }
+    .brand { display:flex; align-items:center; gap:12px; font-weight:700; font-size:18px; }
+    .logo { width:42px; height:42px; border-radius:10px; background:linear-gradient(135deg,#0b2038,#162a45);
+      display:flex; align-items:center; justify-content:center; color:var(--accent); font-size:20px; font-weight:800; }
+    ul.menu { display:flex; gap:20px; list-style:none; align-items:center; }
+    ul.menu a { color:inherit; text-decoration:none; padding:8px 12px; border-radius:8px; transition:.2s; }
+    ul.menu a:hover { background:var(--glass); }
+    .cta { background:var(--accent); color:#000; padding:10px 16px; border-radius:10px; font-weight:600; }
+    .burger { display:none; cursor:pointer; }
+    .burger span { display:block; width:28px; height:3px; background:var(--accent); margin:6px 0; border-radius:3px; }
+
+    .lang-select {
+      background:rgba(255,255,255,0.1); border:none; color:white; padding:8px 12px;
+      border-radius:8px; font-size:14px; cursor:pointer;
+    }
+    .lang-select option { background:#111; }
+
+    .hero { position:relative; height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .hero video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:brightness(0.85); }
+    .overlay { position:absolute; inset:0; background:linear-gradient(180deg,rgba(2,6,23,0.4),rgba(2,6,23,0.8)); }
+    .hero-inner { padding:0 20px; text-align:center; max-width:1200px; z-index:2; }
+    .kicker { display:inline-block; background:rgba(11,28,45,0.6); padding:8px 16px; border-radius:99px; font-size:14px; margin-bottom:20px; }
+    h1 { font-size:48px; line-height:1.1; margin-bottom:16px; }
+    .lead { font-size:19px; max-width:800px; margin:0 auto 32px; opacity:0.95; }
+    .actions { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+    .btn { padding:14px 28px; border-radius:12px; font-weight:600; cursor:pointer; border:none; transition:.3s; }
+    .btn-primary { background:var(--accent); color:#000; }
+    .btn-ghost { background:transparent; border:1px solid rgba(255,255,255,0.2); color:white; }
+
+    .container { max-width:1200px; margin:0 auto; padding:0 20px; }
+    .shows { padding:90px 0; }
+    h2 { font-size:34px; text-align:center; margin-bottom:50px; color:var(--accent); }
+
+    .grid { display:grid; gap:28px; grid-template-columns:repeat(auto-fit, minmax(320px,1fr)); }
+    .card {
+      background:linear-gradient(180deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01));
+      border-radius:16px; overflow:hidden; transition:all .4s; box-shadow:0 8px 32px rgba(0,0,0,0.6);
+    }
+    .card:hover { transform:translateY(-12px); box-shadow:0 0 25px 50px rgba(123,220,255,0.25); }
+    .card img { width:100%; height:220px; object-fit:cover; }
+    .card h3 { padding:20px 20px 8px; font-size:20px; }
+    .card p { padding:0 20px; font-size:15px; opacity:0.9; }
+    .card small { display:block; padding:0 20px 20px; opacity:0.7; }
+
+    .about-row { display:grid; gap:50px; grid-template-columns:1fr 1fr; align-items:center; margin-top:40px; }
+    .about-img img { width:100%; border-radius:16px; box-shadow:0 15px 40px rgba(0,0,0,0.7); }
+    .about-text { font-size:18px; line-height:1.8; }
+
+    .video-box { max-width:900px; margin:70px auto; border-radius:20px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,0.8); }
+    .video-box video { width:100%; display:block; }
+
+    .carousel-container { position:relative; max-width:1400px; margin:70px auto; border-radius:20px; overflow:hidden; box-shadow:0 20px 70px rgba(0,0,0,0.9); }
+    .carousel-slide { display:flex; transition:transform 0.7s ease; }
+    .carousel-slide img { width:100%; height:480px; object-fit:cover; flex-shrink:0; }
+    .carousel-btn { position:absolute; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.6); backdrop-filter:blur(10px);
+      color:white; border:none; width:60px; height:60px; border-radius:50%; font-size:36px; cursor:pointer; z-index:10; }
+    .carousel-btn:hover { background:var(--accent); color:#000; }
+    .prev { left:20px; }
+    .next { right:20px; }
+    .carousel-dots { text-align:center; padding:20px 0; }
+    .dot { display:inline-block; width:12px; height:12px; margin:0 8px; background:rgba(255,255,255,0.4); border-radius:50%; cursor:pointer; }
+    .dot.active, .dot:hover { background:var(--accent); transform:scale(1.4); }
+
+    footer { background:#0a1425; padding:90px 20px 50px; color:#cfefff; border-top:1px solid #1e3a5f; }
+    footer h3 { color:var(--accent); margin:30px 0 15px; font-size:22px; }
+
+    @media (max-width:1024px) { .grid, .about-row { grid-template-columns:1fr; text-align:center; } }
+    @media (max-width:768px) {
+      h1 { font-size:38px; } .hero { height:90vh; } .actions { flex-direction:column; } .btn { width:100%; max-width:350px; }
+      .carousel-slide img { height:300px; }
+    }
+    @media (max-width:600px) {
+      nav { padding:12px 16px; }
+      ul.menu { position:fixed; top:68px; left:0; right:0; background:rgba(7,7,18,0.98); flex-direction:column; padding:30px; display:none; backdrop-filter:blur(15px); }
+      ul.menu.active { display:flex; }
+      .burger { display:block; }
+      h1 { font-size:32px; } h2 { font-size:28px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">
+    <div class="logo">P</div>
+    <div>Planetariy.uz</div>
+  </div>
+  <div class="burger"><span></span><span></span><span></span></div>
+  <ul class="menu">
+    <li><a href="#about" data-key="nav_about">Biz haqimizda</a></li>
+    <li><a href="#departments" data-key="nav_departments">Bo‘limlar</a></li>
+    <li><a href="#films" data-key="nav_films">Filmlar</a></li>
+    <li><a href="#gallery" data-key="nav_gallery">Galereya</a></li>
+    <li><a href="#kontakt" data-key="nav_contact">Kontakt</a></li>
+    <li><a href="#book" class="cta" data-key="nav_book">Chipta bron</a></li>
+    <li>
+      <select class="lang-select" id="langSelect">
+        <option value="uz">O‘zbekcha (lotin)</option>
+        <option value="uz-cyrl">Ўзбекча (кирил)</option>
+        <option value="ru">Русский</option>
+      </select>
+    </li>
+  </ul>
+</nav>
+
+<header class="hero">
+  <video autoplay muted loop playsinline>
+    <source src="./40 мб.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
+  <div class="hero-inner container">
+    <div class="kicker" data-key="hero_kicker">Astronomiya Ko‘rgazma Saroyi</div>
+    <h1><span style="color:var(--accent)">Planetariy.uz</span> <span data-key="hero_title">bilan yulduzlar ostida</span></h1>
+    <p class="lead" data-key="hero_desc">Interaktiv 3D shoular, ilmiy eksponatlar, oilaviy dasturlar va unutilmas tajriba</p>
+    <div class="actions">
+      <button class="btn btn-primary" data-key="hero_btn1">Chipta bron qilish</button>
+      <button class="btn btn-ghost" data-key="hero_btn2">Shoularni ko‘rish</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- BIZ HAQIMIZDA -->
+  <section id="about" class="shows">
+    <div class="container">
+      <h2 data-key="about_title">Biz haqimizda</h2>
+      <div class="about-row">
+        <div class="about-img"><img src="./foto4.jpg" alt="Planetariy"></div>
+        <div class="about-text">
+          <p data-key="about_p1">Toshkent shahar Planetariysi — 2003-yilda tashkil etilgan bo‘lib, yoshlar va tashrif buyuruvchilarda astronomiyaga qiziqishni oshirishga xizmat qiladi...</p>
+          <p data-key="about_p2">Har yili minglab o‘quvchilar, talabalar va xorijiy mehmonlar tashrif buyurishadi...</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BO‘LIMLAR -->
+  <section id="departments" class="shows">
+    <div class="container">
+      <h2 data-key="dept_title">Bizda mavjud bo‘limlar</h2>
+      <div class="grid">
+        <div class="card"><img src="mirzoulugbek.jpg"><h3 data-key="dept1">Mirzo Ulug‘bek eksponatlari</h3><p>Ilmiy asboblar, maketlar va interaktiv darslar</p></div>
+        <div class="card"><img src="ulugbekrasatxonasi.jpg"><h3 data-key="dept2">Mirzo Ulug‘bek rasadxonasi</h3><p>Qadimiy astronomiya asboblari reproduksiyasi</p></div>
+        <div class="card"><img src="fazogirlar.jpg"><h3 data-key="dept3">Fazogirlar burchagi</h3><p>Kosmik kiyimlar, raketalar va haqiqiy fazogirlar buyumlari</p></div>
+        <div class="card"><img src="fargoniy.jpg"><h3 data-key="dept4">Al-Farg‘oniy va Ulug‘bek zali</h3><p>Buyuk o‘zbek olimlari hayoti va kashfiyotlari</p></div>
+        <div class="card"><img src="kosmos.jpg"><h3 data-key="dept5">Kosmos burchagi</h3><p>Interaktiv kosmik stansiya va sayyoralar maketlari</p></div>
+        <div class="card"><img src="yulduzlar.jpg"><h3 data-key="dept6">Yulduzli osmon</h3><p>Burjlar, yulduz turkumlari va teleskop kuzatuvlari</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="video-box">
+    <video autoplay muted loop playsinline>
+      <source src="./40 мб.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- FILMLAR -->
+  <section id="films" class="shows">
+    <div class="container">
+      <h2 data-key="films_title">Namoyish etilayotgan filmlar</h2>
+      <div class="grid">
+        <div class="card"><img src="./filmlar/Рисунок11.png"><h3>Tabiatshunoslik</h3><p>Uzoq yulduzlar sayohati</p><small>27 min • 6+</small></div>
+        <div class="card"><img src="./filmlar/Рисунок12.png"><h3>Somon Yo‘li Markaziga Sayohat</h3><p>Qora tuynuk sirlari</p><small>7 min • 6+</small></div>
+        <div class="card"><img src="./filmlar/Рисунок13.png"><h3>Ikkita Kichik Oynacha</h3><p>Teleskop tarixi</p><small>25 min • 12+</small></div>
+        <div class="card"><img src="./filmlar/Рисунок14.png"><h3>Yorug‘lik</h3><p>Optika va yorug‘lik ifloslanishi</p><small>7 min • 6+</small></div>
+        <div class="card"><img src="./filmlar/Рисунок15.png"><h3>Koinot Qa’rida</h3><p>Kashfiyotlar tarixi</p><small>32 min • 6+</small></div>
+        <div class="card"><img src="./filmlar/Рисунок19.png"><h3>Qoramtir Materiya</h3><p>Koinotning 95% sirlari</p><small>20 min • 16+</small></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALEREYALAR -->
+  <!-- GALEREYA 1: Vazirlilik va Boshqarma -->
+<section class="shows">
+    <div class="container">
+      <h2 data-key="gal1">Vazirlik va Boshqarma</h2>
+      <div class="carousel-container">
+        <div class="carousel-slide">
+          <img src="./img/vazirlik.jpg" alt="Vazirlik tashrifi">
+          <img src="./img/vazir1.jpg" alt="Vazirlik">
+          <img src="./img/boshqarmaa.jpg" alt="Boshqarma">
+          <img src="./img/vazir.jpg" alt="Vazirlik">
+          <img src="./img/boshqarma.jpg" alt="Boshqarma">
+          <img src="./img/vazirr.jpg" alt="Vazirlik">
+          <img src="./img/boshqarma1.jpg" alt="Boshqarma">
+        </div>
+        <button class="carousel-btn prev">Left Arrow</button>
+        <button class="carousel-btn next">Right Arrow</button>
+        <div class="carousel-dots">
+          <span class="dot active" data-i="0"></span>
+          <span class="dot" data-i="1"></span>
+          <span class="dot" data-i="2"></span>
+          <span class="dot" data-i="3"></span>
+          <span class="dot" data-i="4"></span>
+          <span class="dot" data-i="5"></span>
+          <span class="dot" data-i="6"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- GALEREYA 2: Chet ellik mehmonlar -->
+  <section class="shows">
+    <div class="container">
+      <h2 data-key="gal2">Chet ellik mehmonlar</h2>
+      <div class="carousel-container">
+        <div class="carousel-slide">
+          <img src="./img/chet.jpg" alt="Chet ellik mehmon">
+          <img src="./img/chet3.jpg" alt="Xorijiy delegatsiya">
+          <img src="./img/chet6.jpg" alt="Mehmonlar">
+          <img src="./img/chet1.jpg" alt="Xorijiy mehmonlar">
+          <img src="./img/chet4.jpg" alt="Mehmonlar">
+          <img src="./img/chet8.jpg" alt="Xorijiy tashrif">
+          <img src="./img/chet2.jpg" alt="Mehmonlar">
+          <img src="./img/chet5.jpg" alt="Xorijiy guruh">
+          <img src="./img/chet9.jpg" alt="Mehmonlar">
+        </div>
+        <button class="carousel-btn prev">Left Arrow</button>
+        <button class="carousel-btn next">Right Arrow</button>
+        <div class="carousel-dots">
+          <span class="dot active" data-i="0"></span>
+          <span class="dot" data-i="1"></span>
+          <span class="dot" data-i="2"></span>
+          <span class="dot" data-i="3"></span>
+          <span class="dot" data-i="4"></span>
+          <span class="dot" data-i="5"></span>
+          <span class="dot" data-i="6"></span>
+          <span class="dot" data-i="7"></span>
+          <span class="dot" data-i="8"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- GALEREYA 3: Tashrif buyuruvchilar -->
+  <section class="shows">
+    <div class="container">
+      <h2 data-key="gal3">Tashrif buyuruvchilar</h2>
+      <div class="carousel-container">
+        <div class="carousel-slide">
+          <img src="./img/tashrif1.jpg" alt="Tashrif buyuruvchilar">
+          <img src="./img/tashrif4.jpg" alt="Maktab o‘quvchilari">
+          <img src="./img/tashrif7.jpg" alt="Guruh tashrifi">
+          <img src="./img/tashrif2.jpg" alt="Bolalar">
+          <img src="./img/tashrif5.jpg" alt="Oilalar">
+          <img src="./img/tashrif8.jpg" alt="Tashrifchilar">
+          <img src="./img/tashrif3.jpg" alt="Yoshlar">
+          <img src="./img/tashrif6.jpg" alt="Talabalar">
+          <img src="./img/tashrif9.jpg" alt="Katta guruh">
+        </div>
+        <button class="carousel-btn prev">Left Arrow</button>
+        <button class="carousel-btn next">Right Arrow</button>
+        <div class="carousel-dots">
+          <span class="dot active" data-i="0"></span>
+          <span class="dot" data-i="1"></span>
+          <span class="dot" data-i="2"></span>
+          <span class="dot" data-i="3"></span>
+          <span class="dot" data-i="4"></span>
+          <span class="dot" data-i="5"></span>
+          <span class="dot" data-i="6"></span>
+          <span class="dot" data-i="7"></span>
+          <span class="dot" data-i="8"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- GALEREYA 4: Xayriya va boshqa tadbirlar -->
+  <section class="shows">
+    <div class="container">
+      <h2 data-key="gal4">Xayriya va boshqa tadbirlar</h2>
+      <div class="carousel-container">
+        <div class="carousel-slide">
+          <img src="./img/xayriya1.jpg" alt="Xayriya aksiyasi">
+          <img src="./img/xayriya4.jpg" alt="Yordam tadbiri">
+          <img src="./img/xayriya7.jpg" alt="Bolalar bayrami">
+          <img src="./img/xayriya2.jpg" alt="Sovg‘a tarqatish">
+          <img src="./img/xayriya5.jpg" alt="Xayriya">
+          <img src="./img/xayriya8.jpg" alt="Tadbir">
+          <img src="./img/xayriya3.JPG" alt="Mehribonlik aksiyasi">
+          <img src="./img/xayriya6.jpg" alt="Yordam">
+          <img src="./img/xayriya9.jpg" alt="Xayriya tadbiri">
+        </div>
+        <button class="carousel-btn prev">Left Arrow</button>
+        <button class="carousel-btn next">Right Arrow</button>
+        <div class="carousel-dots">
+          <span class="dot active" data-i="0"></span>
+          <span class="dot" data-i="1"></span>
+          <span class="dot" data-i="2"></span>
+          <span class="dot" data-i="3"></span>
+          <span class="dot" data-i="4"></span>
+          <span class="dot" data-i="5"></span>
+          <span class="dot" data-i="6"></span>
+          <span class="dot" data-i="7"></span>
+          <span class="dot" data-i="8"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- GALEREYA 5: Xalqaro munosabatlar -->
+  <section class="shows">
+    <div class="container">
+      <h2 data-key="gal5">Xalqaro munosabatlar</h2>
+      <div class="carousel-container">
+        <div class="carousel-slide">
+          <img src="./img/munosabatlar1.jpg" alt="Xalqaro hamkorlik">
+          <img src="./img/munosabatlar4.jpg" alt="Delegatsiya">
+          <img src="./img/munosabatlar7.jpg" alt="Uchrashuv">
+          <img src="./img/munosabatlar2.jpg" alt="Xorijiy hamkorlar">
+          <img src="./img/munosabatlar5.jpg" alt="Imzolash marosimi">
+          <img src="./img/munosabatlar8.jpg" alt="Xalqaro tadbir">
+          <img src="./img/munosabatlar3.jpg" alt="Hamkorlik">
+          <img src="./img/munosabatlar6.jpg" alt="Mehmonlar">
+          <img src="./img/munosabatlar9.jpg" alt="Xalqaro uchrashuv">
+        </div>
+        <button class="carousel-btn prev">Left Arrow</button>
+        <button class="carousel-btn next">Right Arrow</button>
+        <div class="carousel-dots">
+          <span class="dot active" data-i="0"></span>
+          <span class="dot" data-i="1"></span>
+          <span class="dot" data-i="2"></span>
+          <span class="dot" data-i="3"></span>
+          <span class="dot" data-i="4"></span>
+          <span class="dot" data-i="5"></span>
+          <span class="dot" data-i="6"></span>
+          <span class="dot" data-i="7"></span>
+          <span class="dot" data-i="8"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Video orasida -->
+  <div class="video-box">
+    <video autoplay muted loop playsinline>
+      <source src="./img/41.MOV" type="video/mp4">
+    </video>
+  </div>
+  
+  <!-- Jamoa -->
+  <section class="shows">
+    <div class="container">
+      <h2 data-key="gal6">Axl Jamoa</h2>
+      <div class="carousel-container">
+        <div class="carousel-slide">
+          <img src="./img/jamoa1.jpg" alt="Jamoa a'zosi">
+          <img src="./img/jamoa4.jpg" alt="Mutaxassis">
+          <img src="./img/jamoa2.jpg" alt="Xodim">
+          <img src="./img/jamoa5.jpg" alt="Jamoa">
+          <img src="./img/jamoa3.jpg" alt="Rahbar">
+          <img src="./img/jamoa6.jpg" alt="Mutaxassislar">
+        </div>
+        <button class="carousel-btn prev">Left Arrow</button>
+        <button class="carousel-btn next">Right Arrow</button>
+        <div class="carousel-dots">
+          <span class="dot active" data-i="0"></span>
+          <span class="dot" data-i="1"></span>
+          <span class="dot" data-i="2"></span>
+          <span class="dot" data-i="3"></span>
+          <span class="dot" data-i="4"></span>
+          <span class="dot" data-i="5"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MIJOZLAR FIKRI -->
+  <section class="shows">
+    <div class="container">
+      <h2 data-key="reviews_title">Mijozlar fikri</h2>
+      <div class="grid">
+        <div class="card"><h3>Ajoyib!</h3><p data-key="rev1">“Bolalar hayajonlanib ketishdi!” – Dilnoza</p></div>
+        <div class="card"><h3>Stunning!</h3><p data-key="rev2">“Best planetarium in Central Asia” – Alex, USA</p></div>
+        <div class="card"><h3 data-key="rev3">Tavsiya qilaman</h3><p data-key="rev4">“Har oy kelamiz” – Farhod</p></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="kontakt">
+  <div class="container">
+    <h3 data-key="footer_address">Bizning manzil</h3>
+    <p data-key="footer_addr_text">Toshkent, Shayxontohur tumani, Zarqaynar ko‘chasi 6-uy</p>
+    <h3 data-key="footer_contact">Aloqa</h3>
+    <p>+998 71 244-77-20<br>+998 71 244-01-34</p>
+    <h3 data-key="footer_email">Email</h3>
+    <p>planetariycom@gmail.com</p>
+    <h3 data-key="footer_social">Bizni kuzating</h3>
+    <p>Facebook • Instagram • Telegram • YouTube</p>
+    <iframe src="https://www.google.com/maps/embed?pb=..." height="300" style="border:0;width:100%;border-radius:16px;" allowfullscreen loading="lazy"></iframe>
+    <p style="margin-top:50px;font-size:14px;opacity:0.7;">© 2025 Planetariy.uz – Barcha huquqlar himoyalangan</p>
+  </div>
+</footer>
+
+<script>
+// BARCHA TARJIMALAR
+const translations = {
+  uz: {
+    nav_about:"Biz haqimizda", nav_departments:"Bo‘limlar", nav_films:"Filmlar", nav_gallery:"Galereya", nav_contact:"Kontakt", nav_book:"Chipta bron",
+    hero_kicker:"Astronomiya Ko‘rgazma Saroyi", hero_title:"bilan yulduzlar ostida", hero_desc:"Interaktiv 3D shoular, ilmiy eksponatlar, oilaviy dasturlar va unutilmas tajriba",
+    hero_btn1:"Chipta bron qilish", hero_btn2:"Shoularni ko‘rish",
+    about_title:"Biz haqimizda",
+    about_p1:"Toshkent shahar Planetariysi — 2003-yilda tashkil etilgan bo‘lib, yoshlar va tashrif buyuruvchilarda astronomiyaga qiziqishni oshirishga xizmat qiladi. 80 o‘rinli zamonaviy zalda o‘zbek, rus va ingliz tillarida 3D dasturlar namoyish etiladi.",
+    about_p2:"Har yili minglab o‘quvchilar, talabalar va xorijiy mehmonlar tashrif buyurishadi. Teleskoplar, quyosh tizimi maketlari, Mirzo Ulug‘bek va Al-Farg‘oniy haykallari, fazogirlar burchagi va boshqa ko‘plab eksponatlar mavjud.",
+    dept_title:"Bizda mavjud bo‘limlar",
+    dept1:"Mirzo Ulug‘bek eksponatlari", dept2:"Mirzo Ulug‘bek rasadxonasi", dept3:"Fazogirlar burchagi",
+    dept4:"Al-Farg‘oniy va Ulug‘bek zali", dept5:"Kosmos burchagi", dept6:"Yulduzli osmon",
+    films_title:"Namoyish etilayotgan filmlar",
+    gal1:"Vazirlik va Boshqarma", gal2:"Chet ellik mehmonlar", gal3:"Tashrif buyuruvchilar",
+    gal4:"Xayriya va boshqa tadbirlar", gal5:"Xalqaro munosabatlar", gal6:"Axl Jamoa",
+    reviews_title:"Mijozlar fikri", rev1:"“Bolalar hayajonlanib ketishdi!” – Dilnoza", rev2:"“Best planetarium in Central Asia” – Alex, USA", rev3:"Tavsiya qilaman", rev4:"“Har oy kelamiz” – Farhod",
+    footer_address:"Bizning manzil", footer_addr_text:"Toshkent, Shayxontohur tumani, Zarqaynar ko‘chasi 6-uy", footer_contact:"Aloqa", footer_email:"Email", footer_social:"Bizni kuzating"
+  },
+  "uz-cyrl": {
+    nav_about:"Биз ҳақимизда", nav_departments:"Бўлимлар", nav_films:"Фильмлар", nav_gallery:"Галерея", nav_contact:"Контакт", nav_book:"Чипта брон",
+    hero_kicker:"Астрономия Кўргазма Саройи", hero_title:"билан юлдузлар остида", hero_desc:"Интерактив 3D шоулар, илмий экспонатлар, оилавий дастурлар ва унутилмас тажриба",
+    hero_btn1:"Чипта брон қилиш", hero_btn2:"Шоуларни кўриш",
+    about_title:"Биз ҳақимизда", about_p1:"Тошкент шаҳар Планетарийси — 2003-йилда ташкил этилган бўлиб...", about_p2:"Ҳар йили минглаб ўқувчилар...",
+    dept_title:"Бизда мавжуд бўлимлар", dept1:"Мирзо Улуғбек экспонатлари", dept2:"Мирзо Улуғбек расадхонаси", dept3:"Фазогирлар бурчаги", dept4:"Ал-Фарғоний ва Улуғбек зали", dept5:"Космос бурчаги", dept6:"Юлдузли осмон",
+    films_title:"Намойиш этилаётган фильмлар",
+    gal1:"Вазирлик ва Бошқарма", gal2:"Чет эллик меҳмонлар", gal3:"Ташриф буюрувчилар", gal4:"Хайрия ва бошқа тадбирлар", gal5:"Халқаро муносабатлар", gal6:"Ахил жамоа",
+    reviews_title:"Мижозлар фикри", rev1:"“Болалар ҳайажонланиб кетишди!” – Дилноза", rev2:"“Best planetarium in Central Asia” – Alex, USA", rev3:"Тавсия қиламан", rev4:"“Ҳар ой келадиз” – Фарҳод",
+    footer_address:"Бизнинг манзил", footer_addr_text:"Тошкент, Шайхонтоҳур тумани, Зарқайнар кўчаси 6-уй", footer_contact:"Алоқа", footer_email:"Email", footer_social:"Бизни кузатинг"
+  },
+  ru: {
+    nav_about:"О нас", nav_departments:"Отделы", nav_films:"Фильмы", nav_gallery:"Галерея", nav_contact:"Контакты", nav_book:"Бронь билетов",
+    hero_kicker:"Дворец астрономии", hero_title:"под звёздами", hero_desc:"Интерактивные 3D-шоу, научные экспонаты, семейные программы и незабываемые впечатления",
+    hero_btn1:"Забронировать билет", hero_btn2:"Посмотреть шоу",
+    about_title:"О нас",
+    about_p1:"Ташкентский планетарий был основан в 2003 году и служит повышению интереса молодёжи и посетителей к астрономии. В современном зале на 80 мест демонстрируются 3D-программы на узбекском, русском и английском языках.",
+    about_p2:"Ежегодно нас посещают тысячи школьников, студентов и иностранных гостей. Имеются телескопы, макеты Солнечной системы, статуи Мирзо Улугбека и Аль-Фергани, уголок космонавтов и множество других экспонатов.",
+    dept_title:"Отделы и экспозиции",
+    dept1:"Экспонаты Мирзо Улугбека", dept2:"Обсерватория Мирзо Улугбека", dept3:"Уголок космонавтов",
+    dept4:"Зал Аль-Фергани и Улугбека", dept5:"Космический уголок", dept6:"Звёздное небо",
+    films_title:"Текущие показы",
+    gal1:"Министерство и Управление", gal2:"Иностранные гости", gal3:"Посетители", gal4:"Благотворительность и мероприятия", gal5:"Международные отношения", gal6:"Наша команда",
+    reviews_title:"Отзывы посетителей",
+    rev1:"“Дети в восторге!” – Дильноза", rev2:"“Best planetarium in Central Asia” – Alex, USA", rev3:"Рекомендую", rev4:"“Приходим каждый месяц” – Фарход",
+    footer_address:"Наш адрес", footer_addr_text:"г. Ташкент, Шайхантахурский район, ул. Заркайнар, 6", footer_contact:"Контакты", footer_email:"Email", footer_social:"Мы в соцсетях"
+  }
+};
+
+function changeLanguage(lang) {
+  document.querySelectorAll('[data-key]').forEach(el => {
+    const key = el.getAttribute('data-key');
+    if (translations[lang] && translations[lang][key]) {
+      el.innerHTML = translations[lang][key];
+    }
+  });
+  document.documentElement.lang = lang === 'uz-cyrl' ? 'uz-Cyrl' : lang;
+  localStorage.setItem('lang', lang);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('lang') || 'uz';
+  document.getElementById('langSelect').value = saved;
+  changeLanguage(saved);
+
+  // Burger
+  document.querySelector('.burger').addEventListener('click', () => {
+    document.querySelector('ul.menu').classList.toggle('active');
+  });
+
+  // Carousel (har bir carousel uchun)
+  document.querySelectorAll('.carousel-container').forEach(container => {
+    const slide = container.querySelector('.carousel-slide');
+    const imgs = slide.querySelectorAll('img');
+    const prev = container.querySelector('.prev');
+    const next = container.querySelector('.next');
+    const dots = container.querySelectorAll('.dot');
+    let i = 0;
+
+    const go = () => {
+      slide.style.transform = `translateX(${-i * 100}%)`;
+      dots.forEach((d, idx) => d.classList.toggle('active', idx === i));
+    };
+
+    prev.onclick = () => { i = (i - 1 + imgs.length) % imgs.length; go(); };
+    next.onclick = () => { i = (i + 1) % imgs.length; go(); };
+    dots.forEach((dot, idx) => dot.onclick = () => { i = idx; go(); });
+
+    setInterval(() => next.click(), 5000);
+  });
+});
+
+document.getElementById('langSelect').addEventListener('change', e => changeLanguage(e.target.value));
+</script>
+</body>
+</html>
